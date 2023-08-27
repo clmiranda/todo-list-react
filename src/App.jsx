@@ -3,6 +3,7 @@ import { TaskCreator } from "./components/TaskCreator";
 import TaskTable from "./components/TaskTable";
 import VisivilityControl from "./components/VisivilityControl";
 import { Toaster } from "react-hot-toast";
+import Footer from "./components/Footer";
 function App() {
   const [tasksItems, setTasksItems] = useState([]);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -48,32 +49,36 @@ function App() {
   }, [tasksItems]);
 
   return (
-    <main className="container col-lg-6 offset-lg-3">
-      <TaskCreator createNewTask={createNewTask} />
+    <>
+      <main className="container col-lg-6 offset-lg-3 mt-5">
+        <TaskCreator createNewTask={createNewTask} />
 
-      <VisivilityControl
-        isChecked={showCompleted}
-        setShowCompleted={(checked) => setShowCompleted(checked)}
-        cleanTasks={cleanTasks}
-      />
+        <VisivilityControl
+          isChecked={showCompleted}
+          setShowCompleted={(checked) => setShowCompleted(checked)}
+          cleanTasks={cleanTasks}
+        />
 
-      <TaskTable
-        tasks={tasksItems}
-        toggleTask={toggleTask}
-        typeTasks={"Pending"}
-      />
-
-      {showCompleted && (
         <TaskTable
           tasks={tasksItems}
           toggleTask={toggleTask}
-          showCompleted={showCompleted}
-          typeTasks={"Completed"}
+          typeTasks={"Pending"}
         />
-      )}
 
-      <Toaster position="top-left" />
-    </main>
+        {showCompleted && (
+          <TaskTable
+            tasks={tasksItems}
+            toggleTask={toggleTask}
+            showCompleted={showCompleted}
+            typeTasks={"Completed"}
+          />
+        )}
+
+        <Toaster position="top-left" />
+      </main>
+
+      <Footer />
+    </>
   );
 }
 
